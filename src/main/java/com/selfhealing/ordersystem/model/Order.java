@@ -1,61 +1,59 @@
 package com.selfhealing.ordersystem.model;
-import java.time.LocalDateTime;
+
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "orders")
 public class Order {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long orderId;
+    private Long id;
 
-    private double amount;
-    private String currency;
+    private String userId;
+    private String productId;
+    private int quantity;
+
+    private Double totalAmount; // ✅ changed from double
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
-    private LocalDateTime createdDate;
-    private LocalDateTime updatedDate;
+    @Column(unique = true) // ✅ prevents duplicate orders
+    private String idempotencyKey;
 
-    // getters and setters....
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt; // ✅ added
 
-    public Long getOrderId() {
-        return orderId;
+    // Getters & Setters
+
+    public Long getId() { return id; }
+
+    public String getUserId() {
+        return userId;
     }
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
-    }
-    public double getAmount() {
-        return amount;
-    }
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-    public String getCurrency() {
-        return currency;
-    }
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
-    public OrderStatus getStatus() {
-        return status;
-    }
-    public void setStatus(OrderStatus status) {
-        this.status = status;
-    }
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
-    }
-    public void setCreatedDate(LocalDateTime createdDate) {
-        this.createdDate = createdDate;
-    }
-    public LocalDateTime getUpdatedDate() {
-        return updatedDate;
-    }
-    public void setUpdatedDate(LocalDateTime updatedDate) {
-        this.updatedDate = updatedDate;
-    }
+    public void setUserId(String userId) { this.userId = userId; }
 
 
+    public String getProductId() { return productId; }
+    public void setProductId(String productId) { this.productId = productId; }
+
+    public int getQuantity() { return quantity; }
+    public void setQuantity(int quantity) { this.quantity = quantity; }
+
+    public Double getTotalAmount() { return totalAmount; }
+    public void setTotalAmount(Double totalAmount) { this.totalAmount = totalAmount; }
+
+    public OrderStatus getStatus() { return status; }
+    public void setStatus(OrderStatus status) { this.status = status; }
+
+    public String getIdempotencyKey() { return idempotencyKey; }
+    public void setIdempotencyKey(String idempotencyKey) { this.idempotencyKey = idempotencyKey; }
+
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+
+    public LocalDateTime getUpdatedAt() { return updatedAt; }
+    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
 }
